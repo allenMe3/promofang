@@ -57,16 +57,16 @@
               <div style="width:100%" v-else>
                 <van-grid-item v-for="(ren, index) in ren" :key="index">
                     <div class="nav">
-                    <div class="nav_head">
-                        <div class="nav_headleft">{{ren.name}}的问题</div>
-                        <div class="nav_headright">超期未处理</div>
-                    </div>
-                    <div class="nav_body">
-                        <div class="nav_bodytext">计划开始时间：{{ren.time}}</div>
-                        <div class="nav_bodytext">计划结束时间：{{ren.timeout}}</div>
-                        <div class="nav_bodytext">督办内容：{{ren.content}}</div>
-                        <div class="nav_bodytext">负责人：{{ren.funame}}</div>
-                    </div>
+                      <div class="nav_head">
+                          <div class="nav_headleft">{{ren.name}}的问题</div>
+                          <div class="nav_headright">超期未处理</div>
+                      </div>
+                      <div class="nav_body">
+                          <div class="nav_bodytext">计划开始时间：{{ren.time}}</div>
+                          <div class="nav_bodytext">计划结束时间：{{ren.timeout}}</div>
+                          <div class="nav_bodytext">督办内容：{{ren.content}}</div>
+                          <div class="nav_bodytext">负责人：{{ren.funame}}</div>
+                      </div>
                     </div>
                 </van-grid-item>
               </div>
@@ -128,9 +128,7 @@ export default {
     return{
       // 问题数据
         ren:[{'name':'陈红','content':'请求上级支援','time':'2020/1/15','timeout':'2020/1/15','funame':'张三'},
-        {'name':'李四','content':'请求上级支援','time':'2020/1/13','timeout':'2020/1/13','funame':'张三'}
-        //   {'name':'王二','content':'请求上级支援','time':'2020/1/12','timeout':'2020/1/12','funame':'张三'}
-        ],
+        {'name':'李四','content':'请求上级支援','time':'2020/1/13','timeout':'2020/1/13','funame':'张三'}],
         searchData:[],
         active: 2,
         dot:true,
@@ -210,6 +208,7 @@ export default {
     }
     let a = JSON.parse(localStorage.getItem("search")).notempty()
     this.historyval = a
+    
   }
 }
 </script>
@@ -223,7 +222,7 @@ export default {
     height: 100%;
     opacity: 0.94;
     background-color: #F9F9F9;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 100;
 
@@ -259,11 +258,12 @@ export default {
     margin-top: 2%;
   }
   header{
+    position: fixed;
     background-image: url('../assets/1.png');
     width: 100%;
     height: 48px;
-    position: absolute;
     top: 0;
+    z-index: 100;
   }
   .headleft{
     float: left;
@@ -338,7 +338,7 @@ export default {
     background-image: url('../assets/1.png');
     width: 100%;
     height: 48px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     font-family: PingFangSC-Medium;
     font-size: 14px;
