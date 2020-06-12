@@ -149,11 +149,12 @@ export default {
       this.isshow = true
     },
     onSearch(val) {
-      var searchval = JSON.parse(localStorage.getItem("search"));
+      var searchval = JSON.parse(localStorage.getItem("search")||'[]');
       searchval.push(val);
       localStorage.setItem("search", JSON.stringify(searchval));
-      this.historyval = JSON.parse(localStorage.getItem("search"))
+      this.historyval = JSON.parse(localStorage.getItem("search")).notempty()
       this.isshow = false
+      this.value = ''
       var search = val;
       if (search) {
         this.searchData = this.ren.filter(function(ren) {
@@ -172,6 +173,9 @@ export default {
         });
       }else if(search==0){
         this.searchData = []
+      }else{
+        console.log(1);
+        
       }
     },
     vall(historyval){
@@ -179,7 +183,7 @@ export default {
     },
     shanchu(){
       localStorage.setItem("search", '');
-      console.log(1);
+      this.historyval = ''
       
     },
     onCancel() {
@@ -194,18 +198,18 @@ export default {
     }
   },
   mounted(){
-    // Array.prototype.notempty = function() {
-    //   var arr = [];
-    //   this.map(function(val) {
-    //       //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
-    //       if (val !== "" && val != undefined) {
-    //           arr.push(val);
-    //       }
-    //   });
-    //   return arr;
-    // }
-    // let a = JSON.parse(localStorage.getItem("search")).notempty()
-    // this.historyval = a
+    Array.prototype.notempty = function() {
+      var arr = [];
+      this.map(function(val) {
+          //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
+          if (val !== "" && val != undefined) {
+              arr.push(val);
+          }
+      });
+      return arr;
+    }
+    let a = JSON.parse(localStorage.getItem("search")).notempty()
+    this.historyval = a
   }
 }
 </script>
