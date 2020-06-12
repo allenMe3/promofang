@@ -28,14 +28,33 @@
           </g>
       </svg>
       <div class="his">
-        <div v-for="(historyval,index) in historyval" :key="index" class="history">{{historyval}}</div>
+        <div v-for="(historyval,index) in historyval" :key="index" class="history" @click="vall(historyval)">{{historyval}}</div>
       </div>
     </div>
     <!-- tab标签页 -->
-    <van-tabs v-model="active" animated>
+    <van-tabs v-model="active" animated @click="clickk">
         <van-tab title="个人发起">
           <!-- 问题列表 -->
+            <!-- 搜索后 -->
             <van-grid :column-num="1" :gutter="0" :border="false">
+              <div style="width:100%" v-if="searchData.length>0">
+                <van-grid-item v-for="(searchData, index) in searchData" :key="index">
+                    <div class="nav">
+                    <div class="nav_head">
+                        <div class="nav_headleft">{{searchData.name}}的问题</div>
+                        <div class="nav_headright">超期未处理</div>
+                    </div>
+                    <div class="nav_body">
+                        <div class="nav_bodytext">计划开始时间：{{searchData.time}}</div>
+                        <div class="nav_bodytext">计划结束时间：{{searchData.timeout}}</div>
+                        <div class="nav_bodytext">督办内容：{{searchData.content}}</div>
+                        <div class="nav_bodytext">负责人：{{searchData.funame}}</div>
+                    </div>
+                    </div>
+                </van-grid-item>
+              </div>
+              <!-- 搜索前 -->
+              <div style="width:100%" v-else>
                 <van-grid-item v-for="(ren, index) in ren" :key="index">
                     <div class="nav">
                     <div class="nav_head">
@@ -50,11 +69,31 @@
                     </div>
                     </div>
                 </van-grid-item>
+              </div>
             </van-grid>
         </van-tab>
-        <van-tab title="代办问题" :dot="dot" click="clickk">
+        <van-tab title="代办问题" :dot="dot" ref='name'>
           <!-- 问题列表 -->
-             <van-grid :column-num="1" :gutter="0" :border="false">
+            <!-- 搜索后 -->
+            <van-grid :column-num="1" :gutter="0" :border="false">
+              <div style="width:100%" v-if="searchData.length>0">
+                <van-grid-item v-for="(searchData, index) in searchData" :key="index">
+                    <div class="nav">
+                    <div class="nav_head">
+                        <div class="nav_headleft">{{searchData.name}}的问题</div>
+                        <div class="nav_headright">超期未处理</div>
+                    </div>
+                    <div class="nav_body">
+                        <div class="nav_bodytext">计划开始时间：{{searchData.time}}</div>
+                        <div class="nav_bodytext">计划结束时间：{{searchData.timeout}}</div>
+                        <div class="nav_bodytext">督办内容：{{searchData.content}}</div>
+                        <div class="nav_bodytext">负责人：{{searchData.funame}}</div>
+                    </div>
+                    </div>
+                </van-grid-item>
+              </div>
+              <!-- 搜索前 -->
+              <div style="width:100%" v-else>
                 <van-grid-item v-for="(ren, index) in ren" :key="index">
                     <div class="nav">
                     <div class="nav_head">
@@ -69,6 +108,7 @@
                     </div>
                     </div>
                 </van-grid-item>
+              </div>
             </van-grid>
         </van-tab>
     </van-tabs>
@@ -91,11 +131,12 @@ export default {
         {'name':'李四','content':'请求上级支援','time':'2020/1/13','timeout':'2020/1/13','funame':'张三'}
         //   {'name':'王二','content':'请求上级支援','time':'2020/1/12','timeout':'2020/1/12','funame':'张三'}
         ],
+        searchData:[],
         active: 2,
         dot:true,
         isshow:false,
         value: '',
-        historyval:JSON.parse(localStorage.getItem("search"))
+        historyval:''
     }
   },
   methods:{
@@ -108,27 +149,63 @@ export default {
       this.isshow = true
     },
     onSearch(val) {
-      // window.localStorage.setItem('search',val)
-      var searchval = JSON.parse(localStorage.getItem("search") || "[]");
+      var searchval = JSON.parse(localStorage.getItem("search"));
       searchval.push(val);
       localStorage.setItem("search", JSON.stringify(searchval));
       this.historyval = JSON.parse(localStorage.getItem("search"))
       this.isshow = false
+      var search = val;
+      if (search) {
+        this.searchData = this.ren.filter(function(ren) {
+          // 每一项数据
+          return Object.keys(ren).some(function(key) {
+            // 每一项数据的参数名
+            // console.log(key)
+            return (
+              String(ren[key])
+                // toLowerCase() 方法用于把字符串转换为小写。
+                .toLowerCase()
+                // indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置。
+                .indexOf(search) > -1
+            );
+          });
+        });
+      }else if(search==0){
+        this.searchData = []
+      }
+    },
+    vall(historyval){
+      this.value = historyval
     },
     shanchu(){
       localStorage.setItem("search", '');
+      console.log(1);
+      
     },
     onCancel() {
       this.isshow = false
     },
     clickk(){
         this.dot = false
-        console.log(this.dot);
     },
     // 跳转问题新建
     gonew(){
         this.$router.push("/newpro")
     }
+  },
+  mounted(){
+    // Array.prototype.notempty = function() {
+    //   var arr = [];
+    //   this.map(function(val) {
+    //       //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
+    //       if (val !== "" && val != undefined) {
+    //           arr.push(val);
+    //       }
+    //   });
+    //   return arr;
+    // }
+    // let a = JSON.parse(localStorage.getItem("search")).notempty()
+    // this.historyval = a
   }
 }
 </script>
