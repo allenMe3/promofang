@@ -33,114 +33,114 @@
     </div>
     <!-- tab标签页 -->
     <van-tabs v-model="active" animated @click="clickk">
-        <van-tab title="个人发起">
-          <!-- 问题列表 -->
-            <!-- 搜索后 -->
-            <van-grid :column-num="1" :gutter="0" :border="false">
-              <div style="width:100%" v-if="searchData.length>0">
-                <van-grid-item v-for="(searchData, index) in searchData" :key="index" to="/prodet">
-                    <div class="nav" @click="det">
-                      <div class="nav_head">
-                          <div class="nav_headleft">{{searchData.name}}的问题</div>
-                          <div class="nav_headright">超期未处理</div>
-                      </div>
-                      <div class="nav_body">
-                          <div class="nav_bodytext">计划开始时间：{{searchData.time}}</div>
-                          <div class="nav_bodytext">计划结束时间：{{searchData.timeout}}</div>
-                          <div class="nav_bodytext">督办内容：{{searchData.content}}</div>
-                          <div class="nav_bodytext">负责人：{{searchData.funame}}</div>
-                      </div>
-                    </div>
-                </van-grid-item>
-              </div>
-              <!-- 搜索前 -->
-              <div style="width:100%" v-else>
-                <van-grid-item v-for="(ren, index) in ren" :key="index">
-                    <div class="nav" @click="det">
-                      <div class="nav_head">
-                          <div class="nav_headleft">{{ren.name}}的问题</div>
-                          <div class="nav_headright">超期未处理</div>
-                      </div>
-                      <div class="nav_body">
-                          <div class="nav_bodytext">计划开始时间：{{ren.time}}</div>
-                          <div class="nav_bodytext">计划结束时间：{{ren.timeout}}</div>
-                          <div class="nav_bodytext">督办内容：{{ren.content}}</div>
-                          <div class="nav_bodytext">负责人：{{ren.funame}}</div>
-                      </div>
-                    </div>
-                </van-grid-item>
-              </div>
-            </van-grid>
+        <van-tab title="基本信息" @click="show">
+            <div class="nav_body">
+                <div class="nav_bodytext headd">陈红的问题<div style="float:right;font-family: PingFangSC-Medium;font-size: 14px;color: #55B00B;">已处理</div></div>
+                <div class="nav_bodytext">问题单号：2020081923265562651</div>
+                <div class="nav_bodytext">反馈单位：横县供电局</div>
+                <div class="nav_bodytext">问题类型：综合</div>
+                <div class="nav_bodytext">督办类型：问题督办</div>
+                <div class="nav_bodytext">计划开始时间：2020/1/11</div>
+                <div class="nav_bodytext">计划结束时间：20201/15</div>
+                <div class="nav_bodytext">问题内容：请求上级支援</div>
+                <div class="nav_bodytext">处理建议：请求上级支援</div>
+                <div class="nav_bodytext">说明附件</div>
+                <van-uploader v-model="fileList" multiple class="up" style="margin-left: 8%;"/>
+            </div>
+            <div>
+                <van-field
+                v-model="message"
+                rows="2"
+                autosize
+                label="处理意见"
+                type="textarea"
+                maxlength="50"
+                placeholder="请输入留言"
+                style="margin-top:2%"
+                />
+                <van-field
+                v-model="message1"
+                rows="2"
+                autosize
+                label="处理意见"
+                type="textarea"
+                maxlength="200"
+                placeholder="请输入留言"
+                show-word-limit
+                style="margin-top:2%"
+                />
+            </div>
+            <div style="height:50px"></div>
+           
         </van-tab>
-        <van-tab title="代办问题" :dot="dot" ref='name'>
-          <!-- 问题列表 -->
-            <!-- 搜索后 -->
-            <van-grid :column-num="1" :gutter="0" :border="false">
-              <div style="width:100%" v-if="searchData.length>0">
-                <van-grid-item v-for="(searchData, index) in searchData" :key="index">
-                    <div class="nav">
-                    <div class="nav_head">
-                        <div class="nav_headleft">{{searchData.name}}的问题</div>
-                        <div class="nav_headright">超期未处理</div>
+        <van-tab title="处理记录" @click="noshow">
+            <div style="float:left">
+                <div style="text-align:center">处理中</div>
+                <div class="time">2020/01/14<br>16:50</div>
+                <div style="margin-top:140%;text-align:center">已移交</div>
+                <div class="time">2020/01/14<br>16:50</div>
+            </div>
+            <van-steps direction="vertical" :active="0">
+                <van-step>
+                    <div class="chuli1">
+                        <div class="bodytext">张三（南宁计划组） 18578906800</div>
+                        <div class="bodytext">李四（南宁基建组） 18578906800</div>
+                        <div class="bodytext">王五（南宁物资组)  18578906800</div>
+                        <div class="bodytext">孙七（南宁xx组）   18578906800</div>
                     </div>
-                    <div class="nav_body">
-                        <div class="nav_bodytext">计划开始时间：{{searchData.time}}</div>
-                        <div class="nav_bodytext">计划结束时间：{{searchData.timeout}}</div>
-                        <div class="nav_bodytext">督办内容：{{searchData.content}}</div>
-                        <div class="nav_bodytext">负责人：{{searchData.funame}}</div>
+                </van-step>
+                <van-step>
+                    <div>建议转由南宁计划组处理</div>
+                    <div class="chuli1">
+                        <div class="bodytext">张三（南宁计划组） 18578906800</div>
+                        <div class="bodytext">李四（南宁基建组） 18578906800</div>
+                        <div class="bodytext">王五（南宁物资组)  18578906800</div>
+                        <div class="bodytext">孙七（南宁xx组）   18578906800</div>
                     </div>
-                    </div>
-                </van-grid-item>
-              </div>
-              <!-- 搜索前 -->
-              <div style="width:100%" v-else>
-                <van-grid-item v-for="(ren, index) in ren" :key="index">
-                    <div class="nav">
-                    <div class="nav_head">
-                        <div class="nav_headleft">{{ren.name}}的问题</div>
-                        <div class="nav_headright">超期未处理</div>
-                    </div>
-                    <div class="nav_body">
-                        <div class="nav_bodytext">计划开始时间：{{ren.time}}</div>
-                        <div class="nav_bodytext">计划结束时间：{{ren.timeout}}</div>
-                        <div class="nav_bodytext">督办内容：{{ren.content}}</div>
-                        <div class="nav_bodytext">负责人：{{ren.funame}}</div>
-                    </div>
-                    </div>
-                </van-grid-item>
-              </div>
-            </van-grid>
+                </van-step>
+            </van-steps>
         </van-tab>
     </van-tabs>
-    <footer @click="gonew">
-        + 问题新建
-    </footer>
+    <div class="block_floot" style="background-color: #E9F6FF;color: #3D6B9E;" v-show="istrue">验证不通过</div>
+    <div class="block_floot" style="background: #2770B8;margin-left:50%;color: #fff;" v-show="istrue"  @click="gosu">验证通过</div>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Grid, GridItem, Overlay, Tab, Tabs, Toast, Search } from 'vant';
+import { Grid, GridItem, Overlay, Tab, Tabs, Toast, Search, Uploader, Field, Step, Steps } from 'vant';
 
-Vue.use(Grid, GridItem, Overlay, Tab, Tabs, Toast, Search );
+Vue.use(Grid, GridItem, Overlay, Tab, Tabs, Toast, Search, Uploader, Field, Step, Steps);
 export default {
   data(){
     return{
       // 问题数据
-        ren:[{'name':'陈红','content':'请求上级支援','time':'2020/1/15','timeout':'2020/1/15','funame':'张三'},
-        {'name':'李四','content':'请求上级支援','time':'2020/1/13','timeout':'2020/1/13','funame':'张三'}],
+        ren:[{'name':'陈红','content':'请求上级支援','time':'2020/1/15','timeout':'2020/1/15','funame':'张三'}],
         searchData:[],
-        active: 2,
+        active: 0,
         dot:true,
         isshow:false,
         value: '',
-        historyval:''
+        historyval:'',
+        fileList: [],
+        message:'',
+        message1:'',
+        istrue:true,
     }
   },
+   watch:{
+     active(newval){//监听
+         if(newval==1){
+             this.istrue = false
+         }else if(newval==0){
+             this.istrue = true
+         }
+     },
+   },
   methods:{
     // 返回上级
     back(){
-      this.$router.push("/")
+      this.$router.push("/prolist")
     },
     // 搜索
     search(){
@@ -173,7 +173,6 @@ export default {
         this.searchData = []
       }else{
         console.log(1);
-        
       }
     },
     vall(historyval){
@@ -182,22 +181,31 @@ export default {
     shanchu(){
       localStorage.setItem("search", '');
       this.historyval = ''
+      
     },
     onCancel() {
       this.isshow = false
     },
     clickk(){
-      this.dot = false
+        this.dot = false
     },
     // 跳转问题新建
     gonew(){
-      this.$router.push("/newpro")
+        this.$router.push("/newpro")
     },
-    det(){
-      this.$router.push("/prodet")
-    }
+    show(){
+        this.istrue = true
+    },
+    noshow(){
+        this.istrue = false
+        console.log(1);
+    },
+    gosu(){
+            this.$router.push("/subsucces")
+        }
   },
   mounted(){
+    sessionStorage.setItem('a','a')
     Array.prototype.notempty = function() {
       var arr = [];
       this.map(function(val) {
@@ -216,9 +224,6 @@ export default {
 </script>
 
 <style scoped>
-  *{
-    text-align: center;
-  }
   .search{
     width: 100%;
     height: 100%;
@@ -288,6 +293,7 @@ export default {
     left: -3%;
     line-height: 40px;
     z-index: -1;
+    text-align: center;
   }
   header svg{
     width: 20px;
@@ -297,56 +303,59 @@ export default {
     margin-right: 5%;
     color: white;
   }
-  .nav{
-    width: 90%;
-    height: 10rem;
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.09);
-    border-radius: 8px;
-  }
-  .nav_head{
-    width: 100%;
-    height: 40px;
-    background: #EEF1F2;
-    border-radius: 4px 4px 0 0;
-    margin-bottom: 2%;
-  }
-  .nav_headleft{
-    float: left;
-    margin-left: 8%;
-    line-height: 40px;
-    font-family: PingFangSC-Medium;
-    font-weight: bold;
-    font-size: 18px;
-    color: #173F5D;
-  }
-  .nav_headright{
-    float: right;
-    line-height: 40px;
-    margin-right: 8%;
-    font-family: PingFangSC-Medium;
-    font-weight: bold;
-    font-size: 14px;
-    color: #EA3333;
-  }
   .nav_bodytext{
     margin-left: 8%;
+    margin-bottom: 1%;
     font-family: PingFangSC-Regular;
     font-size: 14px;
-    color: #6D7278;
+    color: #092545;
     letter-spacing: 0.17px;
     text-align: justify;
     line-height: 24px;
   }
-  footer{
-    background-image: url('../assets/1.png');
-    width: 100%;
+  .headd{
+    font-family: PingFangSC-Semibold;
+    font-size: 18px;
+    color: #092545;
+    letter-spacing: 0;
+    margin-bottom: 5%;
+  }
+  .chuli1{
+    width: 234px;
+    height: 123px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 8px;
+    border-radius: 8px;
+  }
+  .bodytext{
+    float: left;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #6D7278;
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-left: 8%;
+    margin-top: 3.5%;
+    text-align: justify;
+  }
+  .bodytext1{
+    float: right;
+  }
+  .block_floot{
+    width: 50%;
     height: 48px;
+    line-height: 48px;
     position: fixed;
     bottom: 0;
-    font-family: PingFangSC-Medium;
+    text-align: center;
     font-size: 14px;
-    color: #FFFFFF;
-    line-height: 48px;
   }
-    
+  .time{
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #9B9B9B;
+    letter-spacing: 0;
+    text-align: right;
+    line-height: 16px;
+  }
 </style>

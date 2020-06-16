@@ -96,15 +96,17 @@ export default {
     },
     // 弹窗
     showa(){
-      if(this.timeout==0){
-        this.show = false
-      }else{
-        this.show = true
-      }
-      
+        let a = sessionStorage.getItem('a')
+        if(a==1){
+          this.show = true
+          sessionStorage.setItem('a',2)
+        }else if (a==2) {
+          this.show = false
+        }
     }
   },
   mounted(){
+    sessionStorage.setItem('a',1)
     this.showa()
   }
   

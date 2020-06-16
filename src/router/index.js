@@ -29,6 +29,12 @@ const routes = [
       import("../views/Newpro.vue")
   },
   {
+    path: "/prodet",
+    name: "prodet",
+    component: () =>
+      import("../views/prodet.vue")
+  },
+  {
     path: "/subsucces",
     name: "subsucces",
     component: () =>
